@@ -1,1 +1,2 @@
-Tag = Struct.new(:name,:text,:class,:id,:children,:parent)
+Tag = Struct.new(:name,:text,:class,:id, :nested_text, :children,:parent)
+
