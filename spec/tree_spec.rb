@@ -20,13 +20,14 @@ describe Tree do
     it 'contains text' do
       expect(tree.root.text).to be_a_kind_of String
     end
-    it 'text should be empty' do 
+    it 'text should be empty' do
       expect(tree.root.text).to be_empty
     end
     it 'nested text should be a string' do
       expect(tree.root.nested_text).to be_a_kind_of String
     end
   end
+
 
   describe 'adds one node to its parent node' do
   end
@@ -35,10 +36,12 @@ describe Tree do
 
 
   describe 'tags' do
-    before {reader.build_tree("lib/tagged.html")}
+    let(:tree) { Tree.new("lib/tagged.html") }
     it 'has a name'
     it 'has class information'
-    it 'has id information'
+    it 'has id information' do
+      expect(tree.root.id).to eq ["foo"]
+    end
     it 'has a parent node'
     it 'has child nodes'
     it 'contains text'

@@ -10,14 +10,17 @@ class Tree
     name = /^<(\w+)\s*.*>/.match(@doc_string)[1]
     text = /<#{name}.*?>(.*?)</.match(@doc_string)[1]
     nested_text = /<#{name}.*?>(.*?)<\/#{name}>/.match(@doc_string)[1]
-    @root = Tag.new(name,text,nil,nil,nested_text)
+    class_info = /<#{name} class="(.*?)">/.match(@doc_string)
+    tag_class = class_info[1].split(" ") if class_info
+    id_info = /<#{name} id="(.*?)">/.match(@doc_string)
+    tag_id = id_info[1].split(" ") if id_info
+    # binding.pry
+
+    @root = Tag.new(name,text,tag_class,tag_id,nested_text)
   end
 
   def cleanup_string
     @doc_string.gsub!("<!doctype html>\n", "")
-    @doc_string.gsub!(/\n\s*/, "")    
+    @doc_string.gsub!(/\n\s*/, "")
   end
 end
-
-#:class,:id,:children,:parent)
-#NSFW 
