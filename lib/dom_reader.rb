@@ -1,4 +1,5 @@
-require "pry"
+require 'pry'
+require_relative 'tag'
 
 class DOMReader
   attr_accessor :doc_string

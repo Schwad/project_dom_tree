@@ -1,0 +1,1 @@
+Tag = Struct.new(:name,:text,:class,:id,:children,:parent)
