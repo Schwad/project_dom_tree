@@ -4,8 +4,9 @@ describe DOMReader do
   let(:reader){ DOMReader.new }
 
   describe '#build_tree' do
+    let(:schwaddy){ reader.build_tree("lib/spaces.html") }
+    # before { reader.build_tree("lib/spaces.html") }
     describe 'edits file into string correctly' do
-      before { reader.build_tree("lib/spaces.html") }
       it "deletes '<!DOCTYPE HTML>' from the start of the file" do
         expect(reader.doc_string =~ /<!DOCTYPE HTML>/).to be_nil
       end
@@ -13,7 +14,21 @@ describe DOMReader do
         expect(reader.doc_string =~ /\n\s*/).to be_nil
       end
     end
-    describe 'creates a root node' do
+    describe 'root node' do
+      it 'is a tag' do
+        # expect(reader.root).to be_a_kind_of Tag
+        expect(schwaddy.root).to be_a_kind_of Tag
+
+      end
+
+      it 'should be named \'html\'' do
+        expect(reader.root.name).to be 'html'
+      end
+
+      it 'contains text' do
+        expect(reader.root.text).to be_a_kind_of String
+      end
+
     end
     describe 'adds one node to its parent node' do
     end
@@ -21,7 +36,8 @@ describe DOMReader do
     end
   end
 
-  describe 'nodes' do
+  describe 'tags' do
+    before {reader.build_tree("lib/tagged.html")}
     it 'has a name'
     it 'has class information'
     it 'has id information'
