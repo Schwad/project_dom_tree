@@ -11,7 +11,7 @@ class Tree
     @doc_string.gsub!(/\n\s*/, "")
 
     name = /^<(\w+)\s*.*>/.match(@doc_string)[1]
-    text = /<#{name}.*>(.*)<\/#{name}>/.match(@doc_string)[1]
+    text = /<#{name}.*>(.*?)<\/#{name}>/.match(@doc_string)[1]
     @root = Tag.new(name,text)
   end
 end
