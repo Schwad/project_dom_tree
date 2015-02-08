@@ -6,7 +6,7 @@ class TreeSearcher
   def search_by(type, value)
     case type
     when :name
-      search_name(value)      
+      search_name(value)
     when :text
       search_text(value)
     when :id
@@ -21,7 +21,7 @@ class TreeSearcher
     results = []
     until queue.empty?
       count_node = queue.shift
-      if yield(count_node) == value
+      if yield(count_node,value)
         results << count_node
       end
       queue += count_node.children.map { |child| child.dup }
@@ -30,7 +30,22 @@ class TreeSearcher
   end
 
   def search_name(value)
-    search_template(value) {|node| node.name}
+    search_template(value) { |node, value| node.name == value }
   end
 
+  def search_text(value)
+    search_template(value) { |node, value| node.text == value }
+  end
+
+  def search_id(value)
+    search_template(value) do |node, value|
+      !(node.id.nil?) && node.id.include?(value)
+    end
+  end
+
+  def search_class(value)
+    search_template(value) do |node, value|
+      !(node.class.nil?) && node.class.include?(value)
+    end
+  end
 end
