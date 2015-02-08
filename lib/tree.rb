@@ -2,7 +2,7 @@ require_relative 'tag'
 require 'pry'
 
 class Tree
-  attr_accessor :doc_string, :root
+  attr_accessor :doc_string, :document
   def initialize(filename)
     @doc_string = File.open(filename, "r") {|f| f.read}
     cleanup_string
@@ -13,11 +13,11 @@ class Tree
       current_node = queue.shift
       while has_children?(current_node)
         child_name = /<(\w+)\s*.*>/.match(current_node.nested_text)[1]
-        match = if child_name == "li" 
-          /(<li.*?>.*?<\/li>)/.match(current_node.nested_text)
-        else
-          /(<#{child_name}.*?>.*<\/#{child_name}>)/.match(current_node.nested_text)
-        end
+        match = if child_name == "li"
+                  /(<li.*?>.*?<\/li>)/.match(current_node.nested_text)
+                else
+                  /(<#{child_name}.*?>.*<\/#{child_name}>)/.match(current_node.nested_text)
+                end
         child_string = match[1]
         child = create_child current_node, child_string
         current_node.children << child
